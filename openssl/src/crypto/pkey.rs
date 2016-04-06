@@ -866,4 +866,16 @@ mod tests {
         pkey.load_pub(&[]);
         pkey.verify(&[], &[]);
     }
+
+    #[test]
+    fn test_pkey_clone_creates_copy() {
+        let mut pkey = super::PKey::new();
+        pkey.gen(512);
+        let old_pkey_n = pkey.get_rsa().n().unwrap();
+
+        let mut pkey2 = pkey.clone();
+        pkey2.gen(512);
+
+        assert!(old_pkey_n == pkey.get_rsa().n().unwrap());
+    }
 }
