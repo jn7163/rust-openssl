@@ -874,4 +874,15 @@ mod tests {
 
         assert!(old_pkey_n == pkey.get_rsa().n().unwrap());
     }
+
+    #[test]
+    fn test_pkey_clone_copies_private() {
+        let mut pkey = super::PKey::new();
+        pkey.gen(512);
+        let old_pkey_q = pkey.get_rsa().q().unwrap();
+
+        let pkey2 = pkey.clone();
+
+        assert!(old_pkey_q == pkey2.get_rsa().q().unwrap());
+    }
 }
